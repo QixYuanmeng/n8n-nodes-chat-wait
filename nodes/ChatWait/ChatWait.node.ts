@@ -322,7 +322,8 @@ export class ChatWait implements INodeType {
 					},
 				},
 				workflowData: [
-					[
+					[], // 第一个输出端口为空
+					[   // 第二个输出端口输出用户输入数据
 						{
 							json: responseData,
 						},

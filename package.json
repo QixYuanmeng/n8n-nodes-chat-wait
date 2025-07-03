@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-chat-wait",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "N8n node for branch flow control and multi-turn conversations with context memory",
   "keywords": [
     "n8n-community-node-package",
