@@ -1,12 +1,81 @@
 ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
-# n8n-nodes-starter
+# n8n-nodes-chat-wait
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+A custom n8n node for implementing branch flow control and multi-turn conversations with context memory support.
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+## Features
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+- **Branch Flow Control**: Node can immediately output data from previous nodes while waiting for user input
+- **Multi-turn Conversations**: Support waiting for user input and continuing workflow
+- **Context Memory**: Automatically save and manage conversation history
+- **Session Management**: Support multi-user session isolation
+- **Timeout Control**: Configurable timeout for waiting user input
+- **Webhook Integration**: Receive user input through webhooks
+
+## Installation
+
+```bash
+npm install n8n-nodes-chat-wait
+```
+
+## Usage
+
+### Basic Configuration
+
+1. **Prompt Message**: Set the message to display to users
+2. **Timeout**: Set timeout for waiting user input (seconds)
+3. **Enable Context Memory**: Turn on conversation history functionality
+4. **Memory Storage Key**: Set the key name for storing conversation history
+5. **Session ID Field**: Specify the field name for distinguishing user sessions
+
+### Output Ports
+
+- **Continue**: Immediately output data from previous nodes (if immediate output is enabled)
+- **User Input**: Output user input data and related context
+
+### Webhook Usage
+
+The node automatically generates a webhook URL for receiving user input. POST request format:
+
+```json
+{
+  "chatWaitId": "generated wait ID",
+  "userInput": "user input content",
+  "sessionId": "session ID (optional)"
+}
+```
+
+### Conversation History Format
+
+```json
+{
+  "chatHistory": [
+    {
+      "type": "user",
+      "message": "user message",
+      "timestamp": "2025-07-03T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+## Workflow Example
+
+1. **Trigger Node** → **Data Processing** → **Chat Wait Node**
+2. Chat Wait node immediately outputs processed data to Continue port
+3. Simultaneously generates webhook waiting for user input
+4. User sends message to webhook through chat interface
+5. Node receives user input and outputs to User Input port
+6. Continue with subsequent workflow
+
+## Integration with Simple Memory
+
+Can be used with Simple Memory and other memory nodes:
+
+```
+Previous Node → Chat Wait → Simple Memory → AI Processing → Chat Wait → ...
+```
 
 ## Prerequisites
 

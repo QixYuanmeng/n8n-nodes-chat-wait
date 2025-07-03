@@ -1,19 +1,25 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-chat-wait",
   "version": "0.1.0",
-  "description": "",
+  "description": "N8n node for branch flow control and multi-turn conversations with context memory",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n-community-node-package",
+    "chat",
+    "wait",
+    "conversation",
+    "memory",
+    "webhook",
+    "flow-control"
   ],
   "license": "MIT",
   "homepage": "",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "QixYuanmeng",
+    "email": "3286046540@qq.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/QixYuanmeng/n8n-nodes-chat-wait.git"
   },
   "engines": {
     "node": ">=20.15"
@@ -22,10 +28,11 @@
   "scripts": {
     "build": "npx rimraf dist && tsc && gulp build:icons",
     "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
+    "format": "prettier nodes --write",
+    "lint": "eslint nodes package.json",
+    "lintfix": "eslint nodes package.json --fix",
+    "test": "node test-node.js",
+    "prepublishOnly": "npm run build && npm run lint"
   },
   "files": [
     "dist"
@@ -33,12 +40,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/ChatWait/ChatWait.node.js"
     ]
   },
   "devDependencies": {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+			<stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+		</linearGradient>
+	</defs>
+	<rect width="60" height="60" rx="8" fill="url(#gradient)"/>
+	<!-- Chat bubble -->
+	<path d="M15 20 C15 17 17 15 20 15 L40 15 C43 15 45 17 45 20 L45 30 C45 33 43 35 40 35 L25 35 L20 40 L20 35 C17 35 15 33 15 30 Z" fill="white" stroke="none"/>
+	<!-- Wait dots -->
+	<circle cx="25" cy="25" r="2" fill="#4A90E2"/>
+	<circle cx="30" cy="25" r="2" fill="#4A90E2"/>
+	<circle cx="35" cy="25" r="2" fill="#4A90E2"/>
+	<!-- Pause icon overlay -->
+	<rect x="18" y="42" width="3" height="8" fill="white" rx="1"/>
+	<rect x="23" y="42" width="3" height="8" fill="white" rx="1"/>
+</svg>
