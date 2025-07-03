@@ -93,6 +93,19 @@ export class ChatWait implements INodeType {
 				description: 'Whether to immediately output data from previous nodes before waiting for user input',
 			},
 			{
+				displayName: 'Output Fields',
+				name: 'outputFields',
+				type: 'string',
+				default: '',
+				placeholder: 'field1,field2,field3 or leave empty for all fields',
+				displayOptions: {
+					show: {
+						immediateOutput: [true],
+					},
+				},
+				description: 'Comma-separated list of fields to include in immediate output. Leave empty to include all fields.',
+			},
+			{
 				displayName: 'Include Input Data',
 				name: 'includeInputData',
 				type: 'boolean',
@@ -113,19 +126,36 @@ export class ChatWait implements INodeType {
 		const maxHistoryCount = this.getNodeParameter('maxHistoryCount', 0) as number;
 		const sessionIdField = this.getNodeParameter('sessionIdField', 0) as string;
 		const immediateOutput = this.getNodeParameter('immediateOutput', 0) as boolean;
+		const outputFields = this.getNodeParameter('outputFields', 0) as string;
 		const includeInputData = this.getNodeParameter('includeInputData', 0) as boolean;
 
 		// 如果启用立即输出，将前置数据输出到第一个输出端口
 		if (immediateOutput) {
-			returnData[0] = items.map(item => ({
-				...item,
-				json: {
-					...item.json,
-					chatWaitStatus: 'immediate_output',
-					promptMessage,
-					timestamp: new Date().toISOString(),
+			returnData[0] = items.map(item => {
+				let outputData = { ...item.json };
+				
+				// 如果指定了输出字段，只包含这些字段
+				if (outputFields.trim()) {
+					const fields = outputFields.split(',').map(f => f.trim()).filter(f => f);
+					const filteredData: any = {};
+					fields.forEach(field => {
+						if (item.json.hasOwnProperty(field)) {
+							filteredData[field] = item.json[field];
+						}
+					});
+					outputData = filteredData;
 				}
-			}));
+
+				return {
+					...item,
+					json: {
+						...outputData,
+						chatWaitStatus: 'immediate_output',
+						promptMessage,
+						timestamp: new Date().toISOString(),
+					}
+				};
+			});
 		}
 
 		// 处理每个输入项
@@ -163,7 +193,7 @@ export class ChatWait implements INodeType {
 					waitData.inputData = item.json;
 				}
 
-				// 添加到输出
+				// 如果没有启用立即输出，将等待数据添加到第一个输出端口
 				if (!immediateOutput) {
 					returnData[0].push({
 						json: waitData,
