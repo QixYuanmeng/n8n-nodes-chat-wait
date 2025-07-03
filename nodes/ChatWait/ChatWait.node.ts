@@ -14,7 +14,7 @@ export class ChatWait implements INodeType {
 		displayName: 'Chat Wait',
 		name: 'chatWait',
 		icon: 'file:chatwait.svg',
-		group: ['trigger'],
+		group: ['transform'],
 		version: 1,
 		description: 'Wait for user input in multi-turn conversations with context memory and branch flow control',
 		defaults: {
